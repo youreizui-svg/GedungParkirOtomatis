@@ -138,10 +138,21 @@ class SlotParkir:
         return False
 
     def tempati(self, kendaraan):
-        if self.tersedia() and self.cocok(kendaraan):
-            self.__kendaraan = kendaraan
-            return True
-        return False
+        if not self.tersedia:
+        raise ParkirPenuhError(
+            "Slot parkir sudah terisi",
+            nomor_slot=self.nomor_slot
+        )
+
+    if not self.cocok(kendaraan):
+        raise JenisSlotTidakSesuaiError(
+            "Jenis kendaraan tidak sesuai dengan slot",
+            jenis_slot=self.jenis_slot,
+            jenis_kendaraan=type(kendaraan).__name__,
+            plat_nomor=kendaraan.plat_nomor
+        )
+
+    self._kendaraan = kendaraan
 
     def kosongkan(self):
         kendaraan = self.__kendaraan
@@ -172,22 +183,33 @@ class LantaiParkir:
 # 7. CLASS TIKET PARKIR
 class TiketParkir:
     def __init__(self, id_tiket, kendaraan, slot, waktu_masuk):
+
+       
+        if not isinstance(waktu_masuk, (int, float)) or isinstance(waktu_masuk, bool) or waktu_masuk < 0:
+            raise WaktuTidakValidError(
+                "Waktu masuk tidak valid",
+                waktu_masuk=waktu_masuk
+            )
+
+       
         self.id_tiket = id_tiket
         self.kendaraan = kendaraan
         self.slot = slot
         self.waktu_masuk = waktu_masuk
         self.waktu_keluar = None
 
+    
     def hitung_durasi(self):
         if self.waktu_keluar is None:
             return 0
         return max(1, self.waktu_keluar - self.waktu_masuk)
 
+
     def hitung_total(self):
         return self.kendaraan.hitung_biaya(self.hitung_durasi())
+         
 
-
-# 8. CLASS GEDUNG PARKIR
+#CLASS GEDUNG PARKIR
 class GedungParkir:
     nomor_tiket = 1
 
@@ -200,17 +222,50 @@ class GedungParkir:
         self.daftar_lantai.append(LantaiParkir(nomor))
 
     def parkir(self, kendaraan, waktu_masuk):
+
+        # Validasi kendaraan
+        if not isinstance(kendaraan, Kendaraan):
+            raise KendaraanTidakDidukungError(
+                "Objek yang dimasukkan bukan kendaraan yang didukung",
+                kendaraan=type(kendaraan).__name__
+            )
+
+        # Validasi waktu masuk
+        if (not isinstance(waktu_masuk, (int, float))
+                or isinstance(waktu_masuk, bool)
+                or waktu_masuk < 0):
+            raise WaktuTidakValidError(
+                "Waktu masuk tidak valid",
+                waktu_masuk=waktu_masuk
+            )
+
+        # Memeriksa apakah kendaraan masih parkir
+        for tiket_aktif in self.daftar_tiket:
+            if (tiket_aktif.kendaraan == kendaraan
+                    and tiket_aktif.waktu_keluar is None):
+                raise KendaraanSudahParkirError(
+                    "Kendaraan masih memiliki tiket parkir aktif",
+                    plat_nomor=kendaraan.plat_nomor
+                )
+
+        # Menentukan jenis slot
         if isinstance(kendaraan, Motor):
             jenis = "Motor"
         elif isinstance(kendaraan, Mobil):
             jenis = "Mobil"
         else:
-            return None
+            raise KendaraanTidakDidukungError(
+                "Jenis kendaraan tidak didukung",
+                kendaraan=type(kendaraan).__name__
+            )
 
+        # Mencari slot kosong
         for lantai in self.daftar_lantai:
             slot = lantai.cari_slot_kosong(jenis)
 
-            if slot is not None and slot.tempati(kendaraan):
+            if slot is not None:
+                slot.tempati(kendaraan)
+
                 tiket = TiketParkir(
                     str(GedungParkir.nomor_tiket),
                     kendaraan,
@@ -222,26 +277,58 @@ class GedungParkir:
                 self.daftar_tiket.append(tiket)
                 return tiket
 
-        return None
+        # Jika tidak ada slot tersedia
+        raise ParkirPenuhError(
+            "Tidak ada slot parkir yang tersedia",
+            plat_nomor=kendaraan.plat_nomor
+        )
 
     def keluar(self, id_tiket, waktu_keluar):
-        for tiket in self.daftar_tiket:
-            if (tiket.id_tiket == str(id_tiket)
-                    and tiket.waktu_keluar is None):
 
-                tiket.waktu_keluar = waktu_keluar
-                biaya = tiket.hitung_total()
-                tiket.slot.kosongkan()
-                return biaya
+        # Mencari tiket berdasarkan ID
+        tiket = None
 
-        return None
+        for data_tiket in self.daftar_tiket:
+            if data_tiket.id_tiket == str(id_tiket):
+                tiket = data_tiket
+                break
+
+        # Jika tiket tidak ditemukan
+        if tiket is None:
+            raise TiketTidakDitemukanError(
+                "Tiket parkir tidak ditemukan",
+                id_tiket=id_tiket
+            )
+
+        # Jika tiket sudah pernah digunakan untuk keluar
+        if tiket.waktu_keluar is not None:
+            raise TiketSudahKeluarError(
+                "Tiket parkir sudah digunakan untuk keluar",
+                id_tiket=id_tiket
+            )
+
+        # Validasi waktu keluar
+        if (not isinstance(waktu_keluar, (int, float))
+                or isinstance(waktu_keluar, bool)
+                or waktu_keluar < tiket.waktu_masuk):
+            raise WaktuTidakValidError(
+                "Waktu keluar tidak valid",
+                waktu_keluar=waktu_keluar,
+                waktu_masuk=tiket.waktu_masuk
+            )
+
+        # Proses kendaraan keluar
+        tiket.waktu_keluar = waktu_keluar
+        biaya = tiket.hitung_total()
+        tiket.slot.kosongkan()
+
+        return biaya
 
     def tampilkan_slot(self):
         for lantai in self.daftar_lantai:
             for slot in lantai.daftar_slot:
                 status = "Kosong" if slot.tersedia() else "Terisi"
                 print(slot.nomor_slot, status)
-
 
 # 9. PROGRAM UTAMA
 if __name__ == "__main__":
