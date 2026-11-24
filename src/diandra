@@ -1,4 +1,19 @@
 from abc import ABC, abstractmethod
+from abc import ABC, abstractmethod
+
+from exceptions import (
+    ParkirError,
+    PlatNomorTidakValidError,
+    TarifTidakValidError,
+    ParkirPenuhError,
+    JenisSlotTidakSesuaiError,
+    JenisSlotTidakValidError,
+    KendaraanTidakDidukungError,
+    KendaraanSudahParkirError,
+    TiketTidakDitemukanError,
+    TiketSudahKeluarError,
+    WaktuTidakValidError
+)
 # 1. CLASS KENDARAAN (ABSTRACT CLASS)
 class Kendaraan(ABC):
     jumlah_kendaraan = 0
@@ -18,9 +33,13 @@ class Kendaraan(ABC):
 
     @plat_nomor.setter
     def plat_nomor(self, nilai):
-        if not self.validasi_plat(nilai):
-            raise ValueError("Plat nomor tidak valid")
-        self.__plat_nomor = nilai
+         if not isinstance(nilai, str) or not nilai.strip():
+        raise PlatNomorTidakValidError(
+            "Plat nomor tidak valid",
+            plat_nomor=nilai
+        )
+
+    self._plat_nomor = nilai
 
     @property
     def tarif_per_jam(self):
@@ -28,10 +47,14 @@ class Kendaraan(ABC):
 
     @tarif_per_jam.setter
     def tarif_per_jam(self, nilai):
-        if (not isinstance(nilai, (int, float))
-                or isinstance(nilai, bool) or nilai <= 0):
-            raise ValueError("Tarif harus positif")
-        self.__tarif_per_jam = nilai
+    if not isinstance(nilai, (int, float)) or isinstance(nilai, bool) or nilai <= 0:
+        raise TarifTidakValidError(
+            "Tarif harus berupa angka positif",
+            tarif=nilai,
+            plat_nomor=self.plat_nomor
+        )
+
+    self._tarif_per_jam = nilai
 
     @abstractmethod
     def hitung_biaya(self, jam):
@@ -95,9 +118,14 @@ class SlotParkir:
 
     @jenis_slot.setter
     def jenis_slot(self, nilai):
-        if nilai not in ("Motor", "Mobil"):
-            raise ValueError("Jenis slot tidak valid")
-        self.__jenis_slot = nilai
+    if nilai not in ["Motor", "Mobil"]:
+        raise JenisSlotTidakValidError(
+            "Jenis slot tidak valid",
+            jenis_slot=nilai,
+            nomor_slot=self.nomor_slot
+        )
+
+    self._jenis_slot = nilai
 
     def tersedia(self):
         return self.__kendaraan is None
