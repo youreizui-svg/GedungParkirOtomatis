@@ -12,7 +12,7 @@ Anggota Kelompok:
 | 1 | [Ida Ayu Rai Sukraeni] | [2501020071] |
 | 2 | [Nama Anggota 2] | [NIM] |
 | 3 | [Nama Anggota 3] | [NIM] |
-| 4 | [Nama Anggota 4] | [NIM] |
+| 4 | [Sydney Metaliana Dos Santos Narciso] | [2501020087] |
 
 ## 2. Deskripsi Sistem
 
