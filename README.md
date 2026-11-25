@@ -37,9 +37,7 @@ Sistem ini mencakup pengelolaan hierarki jenis kendaraan beserta tarif per jamny
 
 
 ## 4. Class Diagram Revisi
-Berikut adalah visualisasi struktur class diagram terbaru yang mencakup seluruh class domain (Kendaraan, Motor, Mobil, MobilListrik, SlotParkir, LantaiParkir, TiketParkir, GedungParkir) beserta hierarki custom exception (ParkirError dan seluruh turunannya):
 
-![Class Diagram](docs/class-diagram.png)
 
 
 ## 5. Daftar Custom Exception
