@@ -59,7 +59,7 @@ class Kendaraan(ABC):
             raise TarifTidakValidError(
                 "Tarif harus berupa angka positif",
                 tarif=nilai,
-                plat_nomor=self.plat_nomor
+                plat_nomor=getattr(self, "_Kendaraan__plat_nomor", None)
             )
 
         self.__tarif_per_jam = nilai
@@ -255,7 +255,6 @@ class TiketParkir:
 # ==========================================
 
 class GedungParkir:
-
     nomor_tiket = 1
 
     def __init__(self, nama_gedung):

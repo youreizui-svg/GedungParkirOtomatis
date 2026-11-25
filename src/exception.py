@@ -1,7 +1,6 @@
-# exceptions.py
 
 class ParkirError(Exception):
-    """Exception dasar untuk seluruh kesalahan pada sistem parkir."""
+    """Exception dasar untuk seluruh kesalahan sistem parkir."""
 
     def __init__(self, message, **context):
         super().__init__(message)
@@ -18,40 +17,40 @@ class ParkirError(Exception):
 
 
 class PlatNomorTidakValidError(ParkirError):
-    pass
+    """Plat nomor kendaraan tidak memenuhi ketentuan."""
 
 
 class TarifTidakValidError(ParkirError):
-    pass
+    """Tarif parkir tidak valid."""
 
 
 class ParkirPenuhError(ParkirError):
-    pass
+    """Tidak tersedia slot parkir yang sesuai."""
 
 
 class JenisSlotTidakSesuaiError(ParkirError):
-    pass
+    """Jenis kendaraan tidak sesuai dengan slot."""
 
 
 class JenisSlotTidakValidError(ParkirError):
-    pass
+    """Jenis slot tidak dikenali."""
 
 
 class KendaraanTidakDidukungError(ParkirError):
-    pass
+    """Objek kendaraan tidak didukung sistem."""
 
 
 class KendaraanSudahParkirError(ParkirError):
-    pass
+    """Kendaraan masih memiliki tiket parkir aktif."""
 
 
 class TiketTidakDitemukanError(ParkirError):
-    pass
+    """ID tiket tidak ditemukan."""
 
 
 class TiketSudahKeluarError(ParkirError):
-    pass
+    """Tiket sudah digunakan untuk proses keluar."""
 
 
 class WaktuTidakValidError(ParkirError):
-    pass
+    """Waktu masuk atau keluar tidak valid."""

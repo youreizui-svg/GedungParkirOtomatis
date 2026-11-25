@@ -10,7 +10,7 @@ Anggota Kelompok:
 | No. | Nama Anggota | NIM |
 |---|---|---|
 | 1 | [Ida Ayu Rai Sukraeni] | [2501020071] |
-| 2 | [Nama Anggota 2] | [NIM] |
+| 2 | [Rita Anisa Ulirrohma] | [2501020059] |
 | 3 | [Made Diandra Maharani] | [2501020083] |
 | 4 | [Sydney Metaliana Dos Santos Narciso] | [2501020087] |
 
@@ -65,10 +65,84 @@ python src/main.py
 
 ## 7. Contoh Output Program
 
-### Skenario Berhasil
+========================================
+            SKENARIO BERHASIL
+========================================
+
+Nama gedung: Parkir Primakara
+
+--- Proses Kendaraan Masuk ---
+Motor berhasil parkir.
+Mobil berhasil parkir.
+Mobil listrik berhasil parkir.
+
+--- Data Kendaraan ---
+Motor: DK1234AB - Rp2000/jam
+Mobil: DK5678CD - Rp5000/jam
+Mobil listrik: DK9999EF - Rp7000/jam
+
+--- Data Tiket Parkir ---
+Tiket motor: 1
+Tiket mobil: 2
+Tiket mobil listrik: 3
+
+--- Pengujian Kesamaan Kendaraan ---
+Objek motor sama: True
+
+========================================
+             SKENARIO GAGAL
+========================================
+
+--- Plat Nomor Tidak Valid ---
+Gagal: Plat nomor tidak valid (plat_nomor=)
+Pengujian selesai.
+
+--- Tarif Tidak Valid ---
+Gagal: Tarif harus berupa angka positif (tarif=-1000, plat_nomor=DK1234AB)
+Pengujian selesai.
+
+--- Jenis Slot Tidak Valid ---
+Gagal: Jenis slot tidak valid (jenis_slot=Bus, nomor_slot=X1)
+Pengujian selesai.
+
+--- Kendaraan Tidak Didukung ---
+Gagal: Objek yang dimasukkan bukan kendaraan yang didukung (kendaraan=str)
+Pengujian selesai.
+
+--- Kendaraan Sudah Parkir ---
+Gagal: Kendaraan masih memiliki tiket parkir aktif (plat_nomor=DK1234AB)
+Pengujian selesai.
+
+--- Jenis Slot Tidak Sesuai ---
+Gagal: Jenis kendaraan tidak sesuai dengan slot (jenis_slot=Motor, jenis_kendaraan=Mobil, plat_nomor=DK3333AA)
+Pengujian selesai.
+
+--- Waktu Tidak Valid ---
+Gagal: Waktu masuk tidak valid (waktu_masuk=-5)
+Pengujian selesai.
+
+--- Parkir Penuh ---
+Gagal: Tidak ada slot parkir yang tersedia (plat_nomor=DK1113AA)
+Pengujian selesai.
+
+--- Tiket Tidak Ditemukan ---
+Gagal: Tiket parkir tidak ditemukan (id_tiket=999)
+Pengujian selesai.
+
+========================================
+         PROSES KENDARAAN KELUAR
+========================================
+Biaya motor: Rp 4000
+Biaya mobil: Rp 15000
+Biaya mobil listrik: Rp 28000
+
+--- Tiket Sudah Keluar ---
+Gagal: Tiket parkir sudah digunakan untuk keluar (id_tiket=1)
+Pengujian selesai.
 
 
-### Skenario Gagal
+
+
 
 
 ## 8. Pembagian Peran
@@ -76,9 +150,9 @@ python src/main.py
 | No. | Nama Anggota | Tanggung Jawab |
 |---|---|---|
 | 1 | [Ida Ayu Rai Sukraeni] | [Mengembangkan main.py dan integrasi program] |
-| 2 | [Nama Anggota 2] | [Tanggung jawab] |
-| 3 | [Nama Anggota 3] | [Tanggung jawab] |
-| 4 | [Nama Anggota 4] | [Tanggung jawab] |
+| 2 | [Made Diandra Maharani] | [Membuat custom exception] |
+| 3 | [Rita Anisa Ulirrohma] | [Membuat dan memperbarui UML] |
+| 4 | [Sydney Metaliana Dos Santos] | [Dokumentasi REALME] |
 
 ---
 
