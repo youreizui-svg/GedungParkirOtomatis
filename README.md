@@ -15,7 +15,7 @@ Anggota Kelompok:
 | 4 | [Sydney Metaliana Dos Santos Narciso] | [2501020087] |
 
 ## 2. Deskripsi Sistem
-Sistem Manajemen Gedung Parkir Primakara adalah aplikasi berbasis Object-Oriented yang mengelola operasional gedung parkir bertingkat secara terstruktur.
+Sistem Manajemen Gedung Parkir Primakara adalah website berbasis Object-Oriented yang mengelola operasional gedung parkir bertingkat secara terstruktur.
 
 Sistem ini mencakup pengelolaan hierarki jenis kendaraan beserta tarif per jamnya (Motor Rp2.000/jam, Mobil Rp5.000/jam, dan MobilListrik Rp7.000/jam), manajemen lantai (LantaiParkir) dan kapasitas slot (SlotParkir), pencatatan tiket masuk dan keluar (TiketParkir), serta perhitungan biaya parkir dengan durasi minimal 1 jam melalui method hitung_durasi() dan hitung_total(). Seluruh aturan bisnis dan validasi input ditegakkan melalui hierarki custom exception (ParkirError) yang menyimpan detail konteks kesalahan pada atribut context.
 
