@@ -35,8 +35,8 @@ Sistem ini mencakup pengelolaan hierarki jenis kendaraan beserta tarif per jamny
 ---
 
 
-## 4. Class Diagram Revisi
-
+## 4. UML Class Diagram 
+![Class Diagram](docs/class-diagram.png)
 
 
 ## 5. Daftar Custom Exception
